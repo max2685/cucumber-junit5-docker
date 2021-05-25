@@ -4,20 +4,22 @@ Feature: Basic Arithmetic
     Given a calculator I just turned on
 
   @testing
-  Scenario Outline: Several additions
+  Scenario Outline: Several additions1
     When I add <a> and <b>
     Then the result is <c>
+    Then make me: "cry"
 
-  Examples: Single digits
+  Examples: Single digits1
     | a | b | c  |
-    | 1 | 2 | 3  |
-    | 3 | 7 | 10 |
+    | 1 | 2 | 4  |
+    | 3 | 7 | 11 |
 
   Scenario Outline: Several addition2
     When I add <a> and <b>
     Then the result is <c>
+    Then make me: "laught"
 
-    Examples: Single digits
+    Examples: Single digits2
       | a | b | c  |
       | 1 | 2 | 3  |
       | 3 | 7 | 10 |
@@ -25,8 +27,9 @@ Feature: Basic Arithmetic
   Scenario Outline: Several addition3
     When I add <a> and <b>
     Then the result is <c>
+    Then make me: "fuck"
 
-    Examples: Single digits
+    Examples: Single digits3
       | a | b | c  |
       | 1 | 2 | 3  |
       | 3 | 7 | 10 |
@@ -35,7 +38,7 @@ Feature: Basic Arithmetic
     When I add <a> and <b>
     Then the result is <c>
 
-    Examples: Single digits
+    Examples: Single digits4
       | a | b | c  |
       | 1 | 2 | 3  |
       | 3 | 7 | 10 |

@@ -1,15 +1,29 @@
 package com.neotech;
 
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.Screenshots;
 import com.codeborne.selenide.WebDriverRunner;
+import com.codeborne.selenide.commands.TakeScreenshot;
+import com.codeborne.selenide.impl.Screenshot;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
+import io.cucumber.java.Scenario;
+import io.qameta.allure.Allure;
+import io.qameta.allure.Attachment;
 import lombok.extern.java.Log;
+import org.junit.jupiter.api.extension.ExtensionContext;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Objects;
 
 import static com.codeborne.selenide.Configuration.headless;
 import static com.codeborne.selenide.Selenide.sleep;
@@ -33,8 +47,17 @@ public class SetUp {
     }
 
     @After
-    public void quitDriver() {
+    public void quitDriver(Scenario scenario) {
         log.info("DRIVER QUIT");
+        if (scenario.isFailed()) {
+            try {
+                File screenshot = Screenshots.takeScreenShotAsFile();
+                InputStream targetStream = new FileInputStream(Objects.requireNonNull(screenshot));
+                Allure.addAttachment("FailingCase", "image/png", targetStream, "png");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         WebDriverRunner.getWebDriver().quit();
     }
 
